@@ -1,0 +1,29 @@
+{
+  "name": "riot_client_ui",
+  "version": "1.0.0",
+  "description": "This is a experimental project to develop a Client UI based on Riot's game client.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gchsantos/riot_client_ui.git"
+  },
+  "keywords": [
+    "riot",
+    "client",
+    "ui",
+    "interface",
+    "game"
+  ],
+  "author": "gchsantos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gchsantos/riot_client_ui/issues"
+  },
+  "homepage": "https://github.com/gchsantos/riot_client_ui#readme",
+  "dependencies": {
+    "electron": "^19.0.4"
+  }
+}
