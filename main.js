@@ -1,8 +1,13 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+
+windowArgs = {
+    'initialWindowPath': './login-screen/index.html',
+}
 
 let mainWindow;
 
-function createWindow(path) {
+function createWindow({ initialWindowPath }) {
     mainWindow = new BrowserWindow({
         width: 1920,
         height: 1080,
@@ -11,22 +16,31 @@ function createWindow(path) {
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
-            isOffscreen: true
+            preload: path.join(__dirname, 'preload.js'),
+            devTools: true,
         }
     })
-    mainWindow.loadFile(path);
+    mainWindow.loadFile(initialWindowPath);
 }
 
 function main(path) {
     app.whenReady().then(() => {
-        createWindow(path);
+        createWindow(windowArgs);
         app.on('activate', () => {
-            if (BrowserWindow.getAllWindows().length === 0) createWindow('./login-screen/index.html');
+            if (BrowserWindow.getAllWindows().length === 0) createWindow(windowArgs);
         })
     })
 
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') app.quit()
+    })
+
+    ipcMain.on('app/close', () => {
+        app.quit();
+    })
+
+    ipcMain.on('app/minimize', () => {
+        mainWindow.minimize();
     })
 }
 
